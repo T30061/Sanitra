@@ -13,6 +13,20 @@ public class Students {
     }
 
     public Students(String Vorname, String Nachname,boolean isAbsent){
+        this.vorname = Vorname;
+        this.nachname = Nachname;
         this.isAbsent = isAbsent;
+    }
+
+    public String getName(){
+        return vorname + " " + nachname;
+    }
+
+    public String getVorname() {
+        return vorname;
+    }
+
+    public String getNachname() {
+        return nachname;
     }
 }
