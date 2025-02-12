@@ -1,7 +1,6 @@
 package htl.teddy_com.api.students;
 
 import htl.teddy_com.Sanitra;
-import htl.teddy_com.impl.students.David;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +9,6 @@ public class StudentManager {
     private final HashMap<Class<? extends Students>, Students> students = new HashMap<>();
 
     public StudentManager(){
-        addStudent(new David());
     }
 
     private void addStudent(final Students student) {
