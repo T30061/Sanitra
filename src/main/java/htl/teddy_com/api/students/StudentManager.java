@@ -1,6 +1,7 @@
 package htl.teddy_com.api.students;
 
 import htl.teddy_com.Sanitra;
+import htl.teddy_com.impl.students._1BHIT.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,25 +10,23 @@ public class StudentManager {
     private final HashMap<Class<? extends Students>, Students> students = new HashMap<>();
 
     public StudentManager(){
-    }
-
-    private void addStudent(final Students student) {
-        this.students.put(student.getClass(), student);
+        addStudent(new _30061());
+        addStudent(new _30065());
     }
 
     public ArrayList<Students> getStudents() {
         return new ArrayList<>(this.students.values());
     }
 
-    public Students getStudent(final String name) {
-        return this.students.values().stream().filter(module -> module.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+    private void addStudent(final Students student) {
+        this.students.put(student.getClass(), student);
     }
 
     public void getStudentss(){
         System.out.println("List of Students:");
+        System.out.println("Name | age | Class");
         for (Students students : Sanitra.instance.sm.getStudents()){
-            System.out.printf("\t%s\n", students.getName());
+            System.out.printf("\t%s | %d | %s\n", students.getName(),students.getAge(),students.getKlasse().getName());
         }
     }
-
 }

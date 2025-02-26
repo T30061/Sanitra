@@ -1,32 +1,33 @@
 package htl.teddy_com.api.students;
 
+import htl.teddy_com.api.klassen.Klasse;
+
 public class Students {
-    private String vorname, nachname;
-    private int note, age;
-    private boolean isAbsent;
+    private String name;
+    private int age;
+    private int index_number;
+    private Klasse klasse;
 
-    public Students(String Vorname, String Nachname, int note, int age){
-        this.vorname = Vorname;
-        this.nachname = Nachname;
-        this.note = note;
+    public Students(String name, int index_number,int age, Klasse klasse){
+        this.name = name;
+        this.index_number = index_number;
         this.age = age;
+        this.klasse = klasse;
     }
 
-    public Students(String Vorname, String Nachname,boolean isAbsent){
-        this.vorname = Vorname;
-        this.nachname = Nachname;
-        this.isAbsent = isAbsent;
+    public String getName() {
+        return name;
     }
 
-    public String getName(){
-        return vorname + " " + nachname;
+    public int getAge() {
+        return age;
     }
 
-    public String getVorname() {
-        return vorname;
+    public int getIndex_number() {
+        return index_number;
     }
 
-    public String getNachname() {
-        return nachname;
+    public Klasse getKlasse() {
+        return klasse;
     }
 }
