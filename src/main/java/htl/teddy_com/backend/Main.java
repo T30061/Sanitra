@@ -77,7 +77,7 @@ public class Main {
             os.close();
         }
 
-        private void updateIpLog(String ip) {
+        public void updateIpLog(String ip) {
             File file = new File("ip_log.txt");
             Map<String, String> ipRecords = new HashMap<>();
             String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -128,6 +128,8 @@ public class Main {
     static class MoodleHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
+            String clientIp = exchange.getRemoteAddress().getAddress().getHostAddress();
+            updateIpLog(clientIp);
             File cssFile = new File("index.html");
             if (cssFile.exists()) {
                 byte[] cssContent = Files.readAllBytes(Paths.get("index.html"));
@@ -138,6 +140,36 @@ public class Main {
                 os.close();
             } else {
                 exchange.sendResponseHeaders(404, -1);
+            }
+        }
+        private void updateIpLog(String ip) {
+            File file = new File("ip_log.txt");
+            Map<String, String> ipRecords = new HashMap<>();
+            String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+
+            if (file.exists()) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        String[] parts = line.split(" - ", 2);
+                        if (parts.length == 2) {
+                            ipRecords.put(parts[1], parts[0]);
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            ipRecords.put(ip, timestamp);
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                for (Map.Entry<String, String> entry : ipRecords.entrySet()) {
+                    writer.write(entry.getValue() + " - " + entry.getKey());
+                    writer.newLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
